@@ -1347,3 +1347,4 @@ WebVTT.Parser.prototype = {
 };
 
 module.exports = WebVTT;
+window.WebVTT = WebVTT;
