@@ -14,7 +14,8 @@ import document from 'global/document';
 import {isPlain} from '../utils/obj';
 import * as TRACK_TYPES from '../tracks/track-types';
 import {toTitleCase, toLowerCase} from '../utils/string-cases.js';
-import vtt from 'videojs-vtt.js';
+import vtt from '../../../custom_modules/videojs-vtt.js/lib/vtt.js';
+// const vtt = require('../custom_modules/videojs-vtt.js/lib/vtt.js');
 
 /**
  * An Object containing a structure like: `{src: 'url', type: 'mimetype'}` or string

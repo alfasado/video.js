@@ -94,8 +94,7 @@
     "mpd-parser": "0.21.0",
     "mux.js": "6.0.1",
     "safe-json-parse": "4.0.0",
-    "videojs-font": "3.2.0",
-    "videojs-vtt.js": "^0.15.3"
+    "videojs-font": "3.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -171,7 +170,8 @@
       "test/dist",
       "test/api",
       "core.js",
-      "core.es.js"
+      "core.es.js",
+      "custom_modules"
     ]
   },
   "husky": {

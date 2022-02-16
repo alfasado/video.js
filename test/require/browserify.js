@@ -1,6 +1,6 @@
 /* eslint-disable no-var */
 /* eslint-env qunit */
-var videojs = require('../../');
+var videojs = require('../../dist/video.js');
 
 QUnit.module('Browserify Require');
 QUnit.test('videojs should be requirable and bundled via browserify', function(assert) {

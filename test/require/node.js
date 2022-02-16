@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 try {
-  require('../../');
+  require('../../dist/video.js');
 } catch (e) {
   console.error(e);
   process.exit(1);
