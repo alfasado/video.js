@@ -587,21 +587,23 @@ function CueStyleBox(window, cue, styleOptions) {
     unicodeBidi: "plaintext"
   };
 
-  this.applyStyles(styles, this.cueDiv);
+  // this.applyStyles(styles, this.cueDiv);
 
   // Create an absolutely positioned div that will be used to position the cue
   // div. Note, all WebVTT cue-setting alignments are equivalent to the CSS
   // mirrors of them except middle instead of center on Safari.
   this.div = window.document.createElement("div");
   styles = {
-    direction: determineBidi(this.cueDiv),
-    writingMode: cue.vertical === "" ? "horizontal-tb"
-                                     : cue.vertical === "lr" ? "vertical-lr"
-                                                             : "vertical-rl",
-    unicodeBidi: "plaintext",
+    // direction: determineBidi(this.cueDiv),
+    // writingMode: cue.vertical === "" ? "horizontal-tb"
+    //                                  : cue.vertical === "lr" ? "vertical-lr"
+    //                                                          : "vertical-rl",
+    // unicodeBidi: "plaintext",
     textAlign: cue.align === "middle" ? "center" : cue.align,
     font: styleOptions.font,
-    whiteSpace: "pre-line",
+    fontWeight: styleOptions.fontWeight,
+
+    // whiteSpace: "pre-line",
     position: "absolute"
   };
 
@@ -643,6 +645,7 @@ function CueStyleBox(window, cue, styleOptions) {
   }
 
   this.move = function(box) {
+    // console.log(box);
     this.applyStyles({
       top: this.formatStyle(box.top, "px"),
       bottom: this.formatStyle(box.bottom, "px"),
@@ -677,16 +680,14 @@ function BoxPosition(obj) {
     // the inner div's lines. This could be due to bold text, etc, on some platforms.
     // In this case we should get the average line height and use that. This will
     // result in the desired behaviour.
-    lh = rects ? Math.max((rects[0] && rects[0].height) || 0, obj.height / rects.length)
-               : 0;
-
+    lh = rects ? Math.max((rects[0] && rects[0].height) || 0, obj.height / rects.length) : 0;
   }
+  this.height = obj.height || height;
+  this.width = obj.width || width;
   this.left = obj.left;
   this.right = obj.right;
   this.top = obj.top || top;
-  this.height = obj.height || height;
   this.bottom = obj.bottom || (top + (obj.height || height));
-  this.width = obj.width || width;
   this.lineHeight = lh !== undefined ? lh : obj.lineHeight;
 }
 
@@ -771,9 +772,14 @@ BoxPosition.prototype.intersectPercentage = function(b2) {
 // the reference container's positions. This has to be done because this
 // box's positions are in reference to the viewport origin, whereas, CSS
 // values are in referecne to their respective edges.
-BoxPosition.prototype.toCSSCompatValues = function(reference) {
+BoxPosition.prototype.toCSSCompatValues = function(reference, cue) {
+  var top = this.top - reference.top;
+  // console.log(`top ${top}`);
+  // console.log(`this.top ${this.top}`);
+  // console.log(`reference.top ${reference.top}`);
+  // console.log(`this.height ${this.height}`);
   return {
-    top: this.top - reference.top,
+    top: cue.line === 50 ? top - (this.height / 2) : top,
     bottom: reference.bottom - this.bottom,
     left: this.left - reference.left,
     right: reference.right - this.right,
@@ -840,10 +846,10 @@ function moveBoxToLinePosition(window, styleBox, containerBox, boxPositions) {
     return bestPosition || specifiedPosition;
   }
 
-  var boxPosition = new BoxPosition(styleBox),
-      cue = styleBox.cue,
-      linePos = computeLinePos(cue),
-      axis = [];
+  var boxPosition = new BoxPosition(styleBox);
+  var cue = styleBox.cue;
+  var linePos = computeLinePos(cue);
+  var axis = [];
 
   // If we have a line number to align the cue to.
   if (cue.snapToLines) {
@@ -928,8 +934,13 @@ function moveBoxToLinePosition(window, styleBox, containerBox, boxPositions) {
     boxPosition = new BoxPosition(styleBox);
   }
 
-  var bestPosition = findBestPosition(boxPosition, axis);
-  styleBox.move(bestPosition.toCSSCompatValues(containerBox));
+  // 中央表示はベストポジションを探らない
+  if (cue.line === 50) {
+    var bestPosition = boxPosition
+  } else {
+    var bestPosition = findBestPosition(boxPosition, axis);
+  }
+  styleBox.move(bestPosition.toCSSCompatValues(containerBox, cue));
 }
 
 function WebVTT() {
@@ -958,9 +969,11 @@ WebVTT.convertCueToDOMTree = function(window, cuetext) {
   return parseContent(window, cuetext);
 };
 
-var FONT_SIZE_PERCENT = 0.05;
-var FONT_STYLE = "sans-serif";
-var CUE_BACKGROUND_PADDING = "1.5%";
+var FONT_SIZE_PERCENT = 0.066;
+var FONT_SIZE_TITLE_PERCENT = 0.1;
+var FONT_STYLE = "Noto Sans JP, sans-serif";
+// var CUE_BACKGROUND_PADDING = "1.5%";
+var CUE_BACKGROUND_PADDING = "";
 
 // Runs the processing model over the cues and regions passed to it.
 // @param overlay A block level element (usually a div) that the computed cues
@@ -1004,18 +1017,25 @@ WebVTT.processCues = function(window, cues, overlay) {
     return;
   }
 
-  var boxPositions = [],
-      containerBox = BoxPosition.getSimpleBoxPosition(paddedOverlay),
-      fontSize = Math.round(containerBox.height * FONT_SIZE_PERCENT * 100) / 100;
-  var styleOptions = {
-    font: fontSize + "px " + FONT_STYLE
-  };
+  var boxPositions = [];
+  var containerBox = BoxPosition.getSimpleBoxPosition(paddedOverlay);
+  // console.log(paddedOverlay);
+  // console.log(containerBox);
 
   (function() {
     var styleBox, cue;
 
     for (var i = 0; i < cues.length; i++) {
       cue = cues[i];
+
+      var fontSize = Math.round(containerBox.height * FONT_SIZE_PERCENT * 100) / 100;
+      if (cue.line === 50) {
+        fontSize = Math.round(containerBox.height * FONT_SIZE_TITLE_PERCENT * 100) / 100;
+      }
+      let styleOptions = {
+        font: fontSize + "px/2.2em " + FONT_STYLE,
+        fontWeight: "900"
+      };
 
       // Compute the intial position and styles of the cue div.
       styleBox = new CueStyleBox(window, cue, styleOptions);
