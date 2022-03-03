@@ -6,7 +6,8 @@
   left: 0;
   right: 0;
   height: 3.0em;
-
+  z-index: 100;
+  
   @include background-color-with-alpha($primary-background-color, $primary-background-transparency);
 }
 
