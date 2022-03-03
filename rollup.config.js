@@ -1,4 +1,4 @@
-import path from 'path';
+// import path from 'path';
 import fs from 'fs';
 import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
@@ -6,7 +6,7 @@ import commonjs from 'rollup-plugin-commonjs';
 import json from 'rollup-plugin-json';
 import progressPlugin from 'rollup-plugin-progress';
 import ignore from 'rollup-plugin-ignore';
-import alias from 'rollup-plugin-alias';
+// import alias from 'rollup-plugin-alias';
 import _ from 'lodash';
 import pkg from './package.json';
 // import multiEntry from 'rollup-plugin-multi-entry';
@@ -118,32 +118,32 @@ const externals = {
 };
 
 export default cliargs => [
-  // standard umd file
-  {
-    input: 'src/js/index.js',
-    output: {
-      format: 'umd',
-      file: 'dist/video.js',
-      name: 'videojs',
-      banner,
-      globals: globals.browser
-    },
-    external: externals.browser,
-    plugins: [
-      primedIgnore,
-      alias({
-        'video.js': path.resolve(__dirname, './src/js/video.js')
-      }),
-      primedResolve,
-      json(),
-      primedExternalGlobals,
-      primedCjs,
-      primedBabel,
-      cliargs.progress !== false ? progress() : {}
-    ],
-    onwarn,
-    watch
-  },
+  // // standard umd file
+  // {
+  //   input: 'src/js/index.js',
+  //   output: {
+  //     format: 'umd',
+  //     file: 'dist/video.js',
+  //     name: 'videojs',
+  //     banner,
+  //     globals: globals.browser
+  //   },
+  //   external: externals.browser,
+  //   plugins: [
+  //     primedIgnore,
+  //     alias({
+  //       'video.js': path.resolve(__dirname, './src/js/video.js')
+  //     }),
+  //     primedResolve,
+  //     json(),
+  //     primedExternalGlobals,
+  //     primedCjs,
+  //     primedBabel,
+  //     cliargs.progress !== false ? progress() : {}
+  //   ],
+  //   onwarn,
+  //   watch
+  // },
   // // debug umd file
   // {
   //   input: 'src/js/debug.js',
