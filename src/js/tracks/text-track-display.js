@@ -8,18 +8,18 @@ import window from 'global/window';
 
 const darkGray = '#222';
 const lightGray = '#ccc';
-const fontMap = {
-  monospace: 'monospace',
-  sansSerif: 'sans-serif',
-  serif: 'serif',
-  monospaceSansSerif: '"Andale Mono", "Lucida Console", monospace',
-  monospaceSerif: '"Courier New", monospace',
-  proportionalSansSerif: 'sans-serif',
-  proportionalSerif: 'serif',
-  casual: '"Comic Sans MS", Impact, fantasy',
-  script: '"Monotype Corsiva", cursive',
-  smallcaps: '"Andale Mono", "Lucida Console", monospace, sans-serif'
-};
+// const fontMap = {
+//   monospace: 'monospace',
+//   sansSerif: 'sans-serif',
+//   serif: 'serif',
+//   monospaceSansSerif: '"Andale Mono", "Lucida Console", monospace',
+//   monospaceSerif: '"Courier New", monospace',
+//   proportionalSansSerif: 'sans-serif',
+//   proportionalSerif: 'serif',
+//   casual: '"Comic Sans MS", Impact, fantasy',
+//   script: '"Monotype Corsiva", cursive',
+//   smallcaps: '"Andale Mono", "Lucida Console", monospace, sans-serif'
+// };
 
 /**
  * Construct an rgba color from a given hex color code.
@@ -67,15 +67,15 @@ export function constructColor(color, opacity) {
  *
  * @private
  */
-function tryUpdateStyle(el, style, rule) {
-  try {
-    el.style[style] = rule;
-  } catch (e) {
+// function tryUpdateStyle(el, style, rule) {
+//   try {
+//     el.style[style] = rule;
+//   } catch (e) {
 
-    // Satisfies linter.
-    return;
-  }
-}
+//     // Satisfies linter.
+//     return;
+//   }
+// }
 
 /**
  * The component for displaying text track cues.
@@ -315,43 +315,43 @@ class TextTrackDisplay extends Component {
 
       const cueDiv = cue.displayState;
 
-      if (overrides.color) {
-        cueDiv.firstChild.style.color = overrides.color;
-      }
-      if (overrides.textOpacity) {
-        tryUpdateStyle(
-          cueDiv.firstChild,
-          'color',
-          constructColor(
-            overrides.color || '#fff',
-            overrides.textOpacity
-          )
-        );
-      }
-      if (overrides.backgroundColor) {
-        cueDiv.firstChild.style.backgroundColor = overrides.backgroundColor;
-      }
-      if (overrides.backgroundOpacity) {
-        tryUpdateStyle(
-          cueDiv.firstChild,
-          'backgroundColor',
-          constructColor(
-            overrides.backgroundColor || '#000',
-            overrides.backgroundOpacity
-          )
-        );
-      }
-      if (overrides.windowColor) {
-        if (overrides.windowOpacity) {
-          tryUpdateStyle(
-            cueDiv,
-            'backgroundColor',
-            constructColor(overrides.windowColor, overrides.windowOpacity)
-          );
-        } else {
-          cueDiv.style.backgroundColor = overrides.windowColor;
-        }
-      }
+      // if (overrides.color) {
+      //   cueDiv.firstChild.style.color = overrides.color;
+      // }
+      // if (overrides.textOpacity) {
+      //   tryUpdateStyle(
+      //     cueDiv.firstChild,
+      //     'color',
+      //     constructColor(
+      //       overrides.color || '#fff',
+      //       overrides.textOpacity
+      //     )
+      //   );
+      // }
+      // if (overrides.backgroundColor) {
+      //   cueDiv.firstChild.style.backgroundColor = overrides.backgroundColor;
+      // }
+      // if (overrides.backgroundOpacity) {
+      //   tryUpdateStyle(
+      //     cueDiv.firstChild,
+      //     'backgroundColor',
+      //     constructColor(
+      //       overrides.backgroundColor || '#000',
+      //       overrides.backgroundOpacity
+      //     )
+      //   );
+      // }
+      // if (overrides.windowColor) {
+      //   if (overrides.windowOpacity) {
+      //     tryUpdateStyle(
+      //       cueDiv,
+      //       'backgroundColor',
+      //       constructColor(overrides.windowColor, overrides.windowOpacity)
+      //     );
+      //   } else {
+      //     cueDiv.style.backgroundColor = overrides.windowColor;
+      //   }
+      // }
       if (overrides.edgeStyle) {
         if (overrides.edgeStyle === 'dropshadow') {
           cueDiv.firstChild.style.textShadow = `2px 2px 3px ${darkGray}, 2px 2px 4px ${darkGray}, 2px 2px 5px ${darkGray}`;
@@ -370,13 +370,13 @@ class TextTrackDisplay extends Component {
         cueDiv.style.height = 'auto';
         cueDiv.style.top = 'auto';
       }
-      if (overrides.fontFamily && overrides.fontFamily !== 'default') {
-        if (overrides.fontFamily === 'small-caps') {
-          cueDiv.firstChild.style.fontVariant = 'small-caps';
-        } else {
-          cueDiv.firstChild.style.fontFamily = fontMap[overrides.fontFamily];
-        }
-      }
+      // if (overrides.fontFamily && overrides.fontFamily !== 'default') {
+      //   if (overrides.fontFamily === 'small-caps') {
+      //     cueDiv.firstChild.style.fontVariant = 'small-caps';
+      //   } else {
+      //     cueDiv.firstChild.style.fontFamily = fontMap[overrides.fontFamily];
+      //   }
+      // }
     }
   }
 
