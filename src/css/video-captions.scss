@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+.vjs-texttrack-settings,
+.vjs-subs-caps-button {
+  display: none;
+}
+.video-js {
+  .vjs-remaining-time,
+  .vjs-duration {
+    display: none;
+  }
+  .vjs-current-time {
+    display: block;
+  }
+  .vjs-current-time-display ,
+  .vjs-duration-display {
+    font-size: 1rem;
+    font-family: monospace;
+  }
+  .vjs-big-play-button {
+    top: calc(50% - (1.63332em / 2));
+    left: calc(50% - (3em / 2));
+    z-index: 100;
+  }
+}
+
+@-moz-document url-prefix() {
+  video::cue {
+    font-size: 115%;
+    background: transparent;
+  }
+}
+video::cue(.vttBottom) {
+  font-size: 88%;
+}
+video::cue(.vttTop) {
+  font-size: 88%;
+}
+video::cue(.vttTitle) {
+  font-size: 120%;
+}
+
+.vjs-text-track-cue,
+video::cue {
+  font-family: Noto Sans JP, sans-serif;
+  font-weight: 900;
+}
+.vjs-text-track-cue div {
+  display: block;
+}
+.vjs-text-track-cue .vttBlack {
+  color: #000;
+  text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff,
+              -1px 1px 0 #fff,  1px -1px 0 #fff,
+               0px 1px 0 #fff,  0px -1px 0 #fff,
+              -1px 0px 0 #fff,  1px  0px 0 #fff,
+               1px 1px 0 #fff, -1px -1px 0 #fff,
+              -1px 1px 0 #fff,  1px -1px 0 #fff,
+               0px 1px 0 #fff,  0px -1px 0 #fff,
+              -1px 0px 0 #fff,  1px  0px 0 #fff,
+               2px 2px 0 #fff, -2px -2px 0 #fff,
+              -2px 2px 0 #fff,  2px -2px 0 #fff,
+               0px 2px 0 #fff,  0px -2px 0 #fff,
+              -2px 0px 0 #fff,  2px  0px 0 #fff,
+               2px 2px 0 #fff, -2px -2px 0 #fff,
+              -2px 2px 0 #fff,  2px -2px 0 #fff,
+               0px 2px 0 #fff,  0px -2px 0 #fff,
+              -2px 0px 0 #fff,  2px  0px 0 #fff;
+}
+.vjs-text-track-cue .vttWhite,
+video::cue {
+  color: #fff;
+  text-shadow: 1px 1px 0 #000, -1px -1px 0 #000,
+              -1px 1px 0 #000,  1px -1px 0 #000,
+               0px 1px 0 #000,  0px -1px 0 #000,
+              -1px 0px 0 #000,  1px  0px 0 #000,
+               1px 1px 0 #000, -1px -1px 0 #000,
+              -1px 1px 0 #000,  1px -1px 0 #000,
+               0px 1px 0 #000,  0px -1px 0 #000,
+              -1px 0px 0 #000,  1px  0px 0 #000,
+               2px 2px 0 #000, -2px -2px 0 #000,
+              -2px 2px 0 #000,  2px -2px 0 #000,
+               0px 2px 0 #000,  0px -2px 0 #000,
+              -2px 0px 0 #000,  2px  0px 0 #000,
+               2px 2px 0 #000, -2px -2px 0 #000,
+              -2px 2px 0 #000,  2px -2px 0 #000,
+               0px 2px 0 #000,  0px -2px 0 #000,
+              -2px 0px 0 #000,  2px  0px 0 #000;
+}
+.vjs-text-track-cue .vttTop,
+.vjs-text-track-cue .vttBottom,
+.vjs-text-track-cue .vttTitle {
+  display: block;
+}
+.vjs-text-track-cue rt {
+  font-size: 45%;
+}
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: .001dpcm) {
+  .vjs-text-track-cue rt {
+    transform: translateY(-.6em);
+  }
+}
