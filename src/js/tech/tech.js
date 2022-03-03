@@ -15,6 +15,7 @@ import {isPlain} from '../utils/obj';
 import * as TRACK_TYPES from '../tracks/track-types';
 import {toTitleCase, toLowerCase} from '../utils/string-cases.js';
 import vtt from '../../../custom_modules/videojs-vtt.js/lib/vtt.js';
+import '../../../custom_modules/vjs-util/vjs-util.js';
 // const vtt = require('../custom_modules/videojs-vtt.js/lib/vtt.js');
 
 /**
