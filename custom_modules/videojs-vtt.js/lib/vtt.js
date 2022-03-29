@@ -423,6 +423,12 @@ function parseContent(window, input) {
       continue;
     }
 
+    // .vttファイルの改行を反映
+    if (t.match(/\n/)) {
+      t = t.replace(/\n/gi, '');
+      current.appendChild(window.document.createElement('br'));
+    }
+    
     // Text nodes are leaf nodes.
     current.appendChild(window.document.createTextNode(unescape(t)));
   }
