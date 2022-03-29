@@ -425,12 +425,19 @@ function parseContent(window, input) {
 
     // .vttファイルの改行を反映
     if (t.match(/\n/)) {
-      t = t.replace(/\n/gi, '');
-      current.appendChild(window.document.createElement('br'));
+      let texts = t.split('\n');
+      let textLength = texts.length;
+      for (let i = -1; ++i < textLength;) {
+        current.appendChild(window.document.createTextNode(texts[i]));
+        if ((i + 1) !== textLength) {
+          current.appendChild(window.document.createElement('br'));
+        }
+      }
+
+    } else {
+      // Text nodes are leaf nodes.
+      current.appendChild(window.document.createTextNode(unescape(t)));
     }
-    
-    // Text nodes are leaf nodes.
-    current.appendChild(window.document.createTextNode(unescape(t)));
   }
 
   return rootDiv;
