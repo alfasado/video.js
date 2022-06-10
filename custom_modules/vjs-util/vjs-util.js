@@ -4,23 +4,34 @@
      * プレイヤーにVTTファイルをセットする
      * 
      * @param {object} player videojs playerインスタンス
-     * @param {string} url VTTファイルのURL
+     * @param {object} url VTTファイルのURL
      */
     setVTT(player, url) {
       this.removeVTT(player);
-      const captionOption = {
-        id: 'video-vtt-track',
-        kind: 'captions',
-        src: url
-      };
-      const trackElement = player.addRemoteTextTrack(captionOption, true);
-      trackElement.addEventListener('load', () => {
-        const tracks = player.remoteTextTracks();
-        for (let i = -1, l = tracks.length; ++i < l;) {
-          const track = tracks[i];
-          track.mode = 'showing';
-        }
-      });
+      if (url.captions) {
+        const captionOption = {
+          id: 'video-vtt-track',
+          kind: 'captions',
+          src: url.captions
+        };
+        const trackElement = player.addRemoteTextTrack(captionOption, true);
+        trackElement.addEventListener('load', () => {
+          const tracks = player.remoteTextTracks();
+          for (let i = -1, l = tracks.length; ++i < l;) {
+            const track = tracks[i];
+            track.mode = 'showing';
+          }
+        });
+      }
+
+      if (url.chapters) {
+        var option = {
+          id: 'video-vtt-track-chapter',
+          kind: 'chapters',
+          src: url.chapters
+        };
+        player.addRemoteTextTrack(option, true);
+      }
     },
     /**
      * プレイヤーからVTTファイルを削除する
