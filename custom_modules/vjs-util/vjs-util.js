@@ -55,8 +55,15 @@
       if (!tracks.length) {
         return;
       }
-      const track = tracks[0];
-      this.setVTT(player, track.src);
+      var vttUrls = {};
+      [].forEach.call(tracks, (track) => {
+        if (track.kind === 'captions') {
+          vttUrls['captions'] = track.src;
+        } else if (track.kind === 'chapters') {
+          vttUrls['chapters'] = track.src;
+        }
+      });
+      this.setVTT(player, vttUrls);
     }
   };
 
