@@ -1023,12 +1023,12 @@ WebVTT.processCues = function(window, cues, overlay) {
   }
 
   // We don't need to recompute the cues' display states. Just reuse them.
-  if (!shouldCompute(cues)) {
-    for (var i = 0; i < cues.length; i++) {
-      paddedOverlay.appendChild(cues[i].displayState);
-    }
-    return;
-  }
+  // if (!shouldCompute(cues)) {
+  //   for (var i = 0; i < cues.length; i++) {
+  //     paddedOverlay.appendChild(cues[i].displayState);
+  //   }
+  //   return;
+  // }
 
   var boxPositions = [];
   var containerBox = BoxPosition.getSimpleBoxPosition(paddedOverlay);
