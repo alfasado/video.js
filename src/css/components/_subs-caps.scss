@@ -21,7 +21,11 @@
 }
 .video-js .vjs-subs-caps-button + .vjs-menu .vjs-captions-menu-item .vjs-menu-item-text .vjs-icon-placeholder:before {
   font-family: VideoJS;
-  content: "\f10d";
+  content: "\f10c";
   font-size: 1.5em;
   line-height: inherit;
+}
+
+.video-js.vjs-audio-only-mode .vjs-subs-caps-button {
+  display: none;
 }

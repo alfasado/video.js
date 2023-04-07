@@ -164,7 +164,7 @@ QUnit.test('update texttrack buttons on removetrack or addtrack', function(asser
         }
         events[type].push(handler);
       },
-      // Requrired in player.dispose()
+      // Required in player.dispose()
       removeEventListener() {}
     };
   };
@@ -338,7 +338,7 @@ QUnit.test('no lang attribute on cue elements if one is provided', function(asse
   player.tech_.textTracks().addTrack(tt);
 
   player.currentTime(2);
-  player.trigger('timeupdate');
+  player.tech_.trigger('playing');
 
   assert.notOk(tt.activeCues[0].displayState.hasAttribute('lang'), 'no lang attribute should be set');
 
@@ -361,7 +361,7 @@ QUnit.test('set lang attribute on cue elements if one is provided', function(ass
   player.tech_.textTracks().addTrack(tt);
 
   player.currentTime(2);
-  player.trigger('timeupdate');
+  player.tech_.trigger('playing');
 
   assert.equal(tt.activeCues[0].displayState.getAttribute('lang'), 'en', 'the lang should be set to en');
 
@@ -404,7 +404,7 @@ QUnit.test('removes cuechange event when text track is hidden for emulated track
   player.tech_.currentTime = function() {
     return 3;
   };
-  player.tech_.trigger('timeupdate');
+  player.tech_.trigger('playing');
   assert.equal(
     numTextTrackChanges, 3,
     'texttrackchange should be triggered once for the cuechange'
@@ -517,10 +517,10 @@ QUnit.test('should uniformly create html track element when adding text track', 
   player.dispose();
 });
 
-// disable in Firefox and IE because while the code works in practice,
-// during the tests, somehow the text track object isn't ready and thus it won't
-// allow us to change the mode of the track rendering the test non-functional.
-if (!browser.IS_FIREFOX && !browser.IE_VERSION === 11) {
+// disable in Firefox because while the code works in practice, during the
+// tests, somehow the text track object isn't ready and thus it won't allow
+// us to change the mode of the track rendering the test non-functional.
+if (!browser.IS_FIREFOX) {
   QUnit.test('remote text tracks change event should fire when using native text tracks', function(assert) {
     const done = assert.async();
 

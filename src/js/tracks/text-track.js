@@ -9,7 +9,7 @@ import window from 'global/window';
 import Track from './track.js';
 import { isCrossOrigin } from '../utils/url.js';
 import XHR from '@videojs/xhr';
-import merge from '../utils/merge-options';
+import {merge} from '../utils/obj';
 
 /**
  * Takes a webvtt file contents and parses it into cues
@@ -86,7 +86,7 @@ const loadTrack = function(src, track) {
     opts.withCredentials = withCredentials;
   }
 
-  XHR(opts, Fn.bind(this, function(err, response, responseBody) {
+  XHR(opts, Fn.bind_(this, function(err, response, responseBody) {
     if (err) {
       return log.error(err, response);
     }
@@ -128,7 +128,7 @@ class TextTrack extends Track {
    * @param {Object} options={}
    *        Object of option names and values
    *
-   * @param {Tech} options.tech
+   * @param { import('../tech/tech').default } options.tech
    *        A reference to the tech that owns this TextTrack.
    *
    * @param {TextTrack~Kind} [options.kind='subtitles']
@@ -183,11 +183,20 @@ class TextTrack extends Track {
     const cues = new TextTrackCueList(this.cues_);
     const activeCues = new TextTrackCueList(this.activeCues_);
     let changed = false;
-    const timeupdateHandler = Fn.bind(this, function() {
-      if (!this.tech_.isReady_ || this.tech_.isDisposed()) {
-        return;
 
+    this.timeupdateHandler = Fn.bind_(this, function(event = {}) {
+      if (this.tech_.isDisposed()) {
+        return;
       }
+
+      if (!this.tech_.isReady_) {
+        if (event.type !== 'timeupdate') {
+          this.rvf_ = this.tech_.requestVideoFrameCallback(this.timeupdateHandler);
+        }
+
+        return;
+      }
+
       // Accessing this.activeCues for the side-effects of updating itself
       // due to its nature as a getter function. Do not remove or cues will
       // stop updating!
@@ -197,15 +206,20 @@ class TextTrack extends Track {
         this.trigger('cuechange');
         changed = false;
       }
+
+      if (event.type !== 'timeupdate') {
+        this.rvf_ = this.tech_.requestVideoFrameCallback(this.timeupdateHandler);
+      }
+
     });
 
     const disposeHandler = () => {
-      this.tech_.off('timeupdate', timeupdateHandler);
+      this.stopTracking();
     };
 
     this.tech_.one('dispose', disposeHandler);
     if (mode !== 'disabled') {
-      this.tech_.on('timeupdate', timeupdateHandler);
+      this.startTracking();
     }
 
     Object.defineProperties(this, {
@@ -251,10 +265,10 @@ class TextTrack extends Track {
             // On-demand load.
             loadTrack(this.src, this);
           }
-          this.tech_.off('timeupdate', timeupdateHandler);
+          this.stopTracking();
 
           if (mode !== 'disabled') {
-            this.tech_.on('timeupdate', timeupdateHandler);
+            this.startTracking();
           }
           /**
            * An event that fires when mode changes on this track. This allows
@@ -263,7 +277,7 @@ class TextTrack extends Track {
            * > Note: This is not part of the spec!
            *
            * @event TextTrack#modechange
-           * @type {EventTarget~Event}
+           * @type {Event}
            */
           this.trigger('modechange');
 
@@ -312,10 +326,6 @@ class TextTrack extends Track {
 
             if (cue.startTime <= ct && cue.endTime >= ct) {
               active.push(cue);
-            } else if (cue.startTime === cue.endTime &&
-                       cue.startTime <= ct &&
-                       cue.startTime + 0.5 >= ct) {
-              active.push(cue);
             }
           }
 
@@ -355,6 +365,21 @@ class TextTrack extends Track {
     } else {
       this.loaded_ = true;
     }
+  }
+
+  startTracking() {
+    // More precise cues based on requestVideoFrameCallback with a requestAnimationFram fallback
+    this.rvf_ = this.tech_.requestVideoFrameCallback(this.timeupdateHandler);
+    // Also listen to timeupdate in case rVFC/rAF stops (window in background, audio in video el)
+    this.tech_.on('timeupdate', this.timeupdateHandler);
+  }
+
+  stopTracking() {
+    if (this.rvf_) {
+      this.tech_.cancelVideoFrameCallback(this.rvf_);
+      this.rvf_ = undefined;
+    }
+    this.tech_.off('timeupdate', this.timeupdateHandler);
   }
 
   /**

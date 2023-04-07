@@ -33,7 +33,7 @@ const watch = {
 };
 
 const onwarn = (warning) => {
-  // ignore unknow option for --no-progress
+  // ignore unknown option for --no-progress
   if (warning.code === 'UNKNOWN_OPTION' && warning.message.indexOf('progress') !== -1) {
     return;
   }
@@ -57,13 +57,26 @@ const primedBabel = babel({
   compact: false,
   presets: [
     ['@babel/preset-env', {
+      targets: [
+        'last 3 major versions',
+        'Firefox ESR',
+        // This ensures support for certain smart TVs (ex. LG WebOS 4)
+        'Chrome >= 53',
+        'not dead',
+        'not ie 11',
+        'not baidu 7',
+        'not and_qq 11',
+        'not and_uc 12',
+        'not kaios 2',
+        'not op_mini all',
+        'not op_mob 64'
+      ],
       bugfixes: true,
       loose: true,
       modules: false
     }]
   ],
   plugins: [
-    '@babel/plugin-transform-object-assign',
     ['@babel/plugin-transform-runtime', {regenerator: false}]
   ]
 });
@@ -191,12 +204,11 @@ export default cliargs => [
   //     CI_TEST_TYPE === 'coverage' ? istanbul({exclude: excludeCoverage}) : {},
   //     primedBabel,
   //     cliargs.progress !== false ? progress() : {}
-
   //   ],
   //   onwarn,
   //   watch
   // },
-  // // es, cjs
+  // es, cjs
   // {
   //   input: 'src/js/index.js',
   //   output: [
@@ -216,6 +228,7 @@ export default cliargs => [
   //   plugins: [
   //     alias({
   //       'video.js': path.resolve(__dirname, './src/js/video.js'),
+  //       'videojs-contrib-quality-levels': path.resolve(__dirname, './node_modules/videojs-contrib-quality-levels/dist/videojs-contrib-quality-levels.es.js'),
   //       '@videojs/http-streaming': path.resolve(__dirname, './node_modules/@videojs/http-streaming/dist/videojs-http-streaming.es.js')
   //     }),
   //     replace({
@@ -231,7 +244,7 @@ export default cliargs => [
   //   onwarn,
   //   watch
   // },
-  // // novtt umd
+  // novtt umd
   // {
   //   input: 'src/js/index.js',
   //   output: {
@@ -257,18 +270,18 @@ export default cliargs => [
   //   onwarn,
   //   watch
   // },
-  // // core cjs, es
+  // core cjs, es
   // {
   //   input: 'src/js/video.js',
   //   output: [
   //     {
   //       format: 'es',
-  //       file: 'dist/video.core.es.js',
+  //       file: 'core.es.js',
   //       banner,
   //       globals: globals.module
   //     }, {
   //       format: 'cjs',
-  //       file: 'dist/video.core.js',
+  //       file: 'core.js',
   //       banner,
   //       globals: globals.module
   //     }

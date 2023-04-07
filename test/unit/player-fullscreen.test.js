@@ -1,5 +1,6 @@
 /* eslint-env qunit */
 import Player from '../../src/js/player.js';
+import Html5 from '../../src/js/tech/html5.js'; // eslint-disable-line no-unused-vars
 import TestHelpers from './test-helpers.js';
 import sinon from 'sinon';
 import window from 'global/window';
@@ -21,6 +22,19 @@ const FullscreenTestHelpers = {
     };
 
     return player;
+  },
+  fakeSafariVideoEl() {
+    const testEl = document.createElement('video');
+
+    if (!('webkitPresentationMode' in testEl)) {
+      testEl.webkitPresentationMode = 'test';
+    }
+
+    if (!('webkitDisplayingFullscreen' in testEl)) {
+      testEl.webkitDisplayingFullscreen = false;
+    }
+
+    return testEl;
   }
 };
 
@@ -229,6 +243,29 @@ QUnit.test('full window can be preferred to fullscreen tech', function(assert) {
   player.dispose();
 });
 
+QUnit.test('fullscreen mode should exit picture-in-picture if it was enabled', function(assert) {
+  const player = FullscreenTestHelpers.makePlayer(false, {
+    preferFullWindow: true
+  });
+
+  const fakeExitPictureInPicture = sinon.replace(player, 'exitPictureInPicture', sinon.fake(() => {}));
+
+  player.fsApi_ = {};
+  player.tech_.supportsFullScreen = () => true;
+
+  assert.strictEqual(player.isFullscreen(), false, 'player should not be fullscreen initially');
+  player.isInPictureInPicture(true);
+  player.trigger('enterpictureinpicture');
+  assert.strictEqual(player.isInPictureInPicture(), true, 'player is in picture-in-picture');
+
+  assert.strictEqual(fakeExitPictureInPicture.called, false, 'should not have called exitPictureInPicture yet');
+  player.requestFullscreen();
+  assert.strictEqual(player.isFullscreen(), true, 'player should be fullscreen');
+  assert.strictEqual(fakeExitPictureInPicture.called, true, 'should have called exitPictureInPicture');
+
+  player.dispose();
+});
+
 QUnit.test('fullwindow mode should exit when ESC event triggered', function(assert) {
   const player = TestHelpers.makePlayer();
 
@@ -261,6 +298,40 @@ QUnit.test('fullscreenchange event from Html5 should change player.isFullscreen_
   html5.trigger('fullscreenchange', { isFullscreen: false });
 
   assert.ok(!player.isFullscreen(), 'player.isFullscreen_ should be false');
+
+  player.dispose();
+});
+
+QUnit.test('fullscreenchange event from Html5 should guard against Safari showing double controls', function(assert) {
+  const player = FullscreenTestHelpers.makePlayer(undefined, {techOrder: ['html5']}, FullscreenTestHelpers.fakeSafariVideoEl());
+  const html5 = player.tech(true);
+
+  html5.trigger('webkitbeginfullscreen');
+
+  assert.ok(player.isFullscreen(), 'player.isFullscreen_ should be true');
+
+  player.tech_.el_.controls = true;
+
+  html5.trigger('webkitendfullscreen');
+
+  assert.ok(!player.tech_.el_.controls, 'el controls should be false');
+
+  player.dispose();
+});
+
+QUnit.test('Safari leaving fullscreen should retain controls with nativeControlsForTouch', function(assert) {
+  const player = FullscreenTestHelpers.makePlayer(undefined, {techOrder: ['html5'], nativeControlsForTouch: true}, FullscreenTestHelpers.fakeSafariVideoEl());
+  const html5 = player.tech(true);
+
+  html5.trigger('webkitbeginfullscreen');
+
+  assert.ok(player.isFullscreen(), 'player.isFullscreen_ should be true');
+
+  player.tech_.el_.controls = true;
+
+  html5.trigger('webkitendfullscreen');
+
+  assert.ok(player.tech_.el_.controls, 'el controls should be true');
 
   player.dispose();
 });
