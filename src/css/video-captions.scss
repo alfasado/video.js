@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+// NOTE: 本スタイルの読み込みによりユニットテスト「audioOnlyMode(true/false) hides/shows video-specific control bar components」が落ちる。
+//       そのため、当該テストを無効化している。
+
 .vjs-texttrack-settings,
 .vjs-subs-caps-button {
   display: none;
