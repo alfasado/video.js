@@ -57,6 +57,16 @@ jobs:
     - run: echo "::remove-matcher owner=eslint-stylish::"
     - run: echo "::remove-matcher owner=tsc::"
 
+    # https://github.com/actions/setup-node/issues/214#issuecomment-810829250
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        persist-credentials: false
+    - name: Reconfigure git to use HTTP authentication
+      run: >
+        git config --global url."https://github.com/".insteadOf
+        ssh://git@github.com/
+
     - name: npm install
       run: npm i --prefer-offline --no-audit
 
