@@ -2,7 +2,7 @@
   const vjsUtil = {
     /**
      * プレイヤーにVTTファイルをセットする
-     * 
+     *
      * @param {object} player videojs playerインスタンス
      * @param {object} url VTTファイルのURL
      */
@@ -35,7 +35,7 @@
     },
     /**
      * プレイヤーからVTTファイルを削除する
-     * 
+     *
      * @param {object} player videojs playerインスタンス
      */
     removeVTT(player) {
@@ -47,7 +47,7 @@
     },
     /**
      * プレイヤーのVTTキャプションを再描画する
-     * 
+     *
      * @param {object} player videojs playerインスタンス
      */
     refreshVTT(player) {
@@ -68,5 +68,5 @@
   };
 
   module.exports = vjsUtil;
-  window.vjsUtil = vjsUtil;
+  global.vjsUtil = vjsUtil;
 })();

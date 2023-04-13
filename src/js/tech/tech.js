@@ -13,9 +13,8 @@ import document from 'global/document';
 import {isPlain, merge} from '../utils/obj';
 import * as TRACK_TYPES from '../tracks/track-types';
 import {toTitleCase, toLowerCase} from '../utils/str.js';
-import vtt from '../../../custom_modules/videojs-vtt.js/lib/vtt.js';
+import vtt from '@alfasado/videojs-vtt.js';
 import '../../../custom_modules/vjs-util/vjs-util.js';
-// import vtt from 'videojs-vtt.js';
 import * as Guid from '../utils/guid.js';
 
 /**

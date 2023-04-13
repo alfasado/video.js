@@ -85,6 +85,7 @@
     "url": "https://github.com/videojs/video.js.git"
   },
   "dependencies": {
+    "@alfasado/videojs-vtt.js": "github:alfasado/vtt.js#ruby-support",
     "@babel/runtime": "^7.12.5",
     "@videojs/http-streaming": "3.0.2",
     "@videojs/vhs-utils": "^4.0.0",
