@@ -45,4 +45,5 @@ console.log('Minifying files\n');
 minify('dist/video.js', 'dist/video.min.js');
 // minify('dist/alt/video.novtt.js', 'dist/alt/video.novtt.min.js');
 minify('dist/alt/video.core.js', 'dist/alt/video.core.min.js');
+minify('dist/alt/video.core.pcmsx.js', 'dist/alt/video.core.pcmsx.min.js');
 // minify('dist/alt/video.core.novtt.js', 'dist/alt/video.core.novtt.min.js');
