@@ -3121,8 +3121,8 @@ QUnit.test('audioOnlyMode(true/false) hides/shows video-specific control bar com
     'CaptionsButton',
     'DescriptionsButton',
     'FullscreenToggle',
-    'PictureInPictureToggle'
-    // 'SubsCapsButton'
+    'PictureInPictureToggle',
+    'SubsCapsButton'
   ];
 
   const allChildren = childrenShownInAudioOnlyMode.concat(childrenHiddenInAudioOnlyMode);
