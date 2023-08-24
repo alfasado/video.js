@@ -1,11 +1,11 @@
 /* PowerCMS X Customized Begin */
-.vjs-texttrack-settings,
-.vjs-subs-caps-button {
+#caption-editor-area .vjs-texttrack-settings,
+#caption-editor-area .vjs-subs-caps-button {
   display: none;
 }
 
-.video-js .vjs-remaining-time,
-.video-js .vjs-duration {
+#caption-editor-area .video-js .vjs-remaining-time,
+#caption-editor-area .video-js .vjs-duration {
   display: none;
 }
 .video-js .vjs-current-time {
@@ -20,6 +20,11 @@
   top: calc(50% - (1.63332em / 2));
   left: calc(50% - (3em / 2));
   z-index: 100;
+  margin-top: 0;
+  margin-left: 0;
+}
+#caption-editor-area .video-js .vjs-big-play-button {
+  transform: translate(-50%, -50%);
 }
 
 @-moz-document url-prefix() {
