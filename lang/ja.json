@@ -20,8 +20,8 @@
   "Mute": "ミュート",
   "Unmute": "サウンドをオン",
   "Playback Rate": "再生レート",
-  "Subtitles": "サブタイトル",
-  "subtitles off": "サブタイトル オフ",
+  "Subtitles": "字幕",
+  "subtitles off": "字幕 オフ",
   "Captions": "キャプション",
   "captions off": "キャプション オフ",
   "Chapters": "チャプター",
@@ -92,5 +92,6 @@
   "Text Background": "テキスト背景",
   "Caption Area Background": "キャプション領域背景",
   "Skip forward {1} seconds": "{1}秒進む",
-  "Skip backward {1} seconds": "{1}秒戻る"
+  "Skip backward {1} seconds": "{1}秒戻る",
+  "seconds": "秒"
 }
