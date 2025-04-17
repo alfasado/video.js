@@ -9,8 +9,9 @@
 }
 
 // Move captions down when controls aren't being shown
+// Customized: Add :not(.vjs-controls-fixed)
 .video-js.vjs-controls-disabled .vjs-text-track-display,
-.video-js.vjs-user-inactive.vjs-playing .vjs-text-track-display {
+.video-js.vjs-user-inactive.vjs-playing:not(.vjs-controls-fixed) .vjs-text-track-display {
   bottom: 1em;
 }
 
