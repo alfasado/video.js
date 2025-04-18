@@ -415,6 +415,9 @@ class TextTrackDisplay extends Component {
         } else if (overrides.edgeStyle === 'uniform') {
           cueDiv.firstChild.style.textShadow = `0 0 4px ${darkGray}, 0 0 4px ${darkGray}, 0 0 4px ${darkGray}, 0 0 4px ${darkGray}`;
         }
+      } else {
+        // Customized
+        cueDiv.firstChild.style.textShadow = 'initial';
       }
       if (overrides.fontPercent && overrides.fontPercent !== 1) {
         const fontSize = window.parseFloat(cueDiv.style.fontSize);

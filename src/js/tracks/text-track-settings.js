@@ -56,9 +56,10 @@ const selectConfigs = {
     id: 'captions-background-opacity-%s',
     label: 'Opacity',
     options: [
+      // Customized
+      OPACITY_TRANS,
       OPACITY_OPAQUE,
-      OPACITY_SEMI,
-      OPACITY_TRANS
+      OPACITY_SEMI
     ]
   },
 
@@ -83,6 +84,8 @@ const selectConfigs = {
     id: '%s',
     label: 'Text Edge Style',
     options: [
+      // Customized
+      ['default', 'Default'],
       ['none', 'None'],
       ['raised', 'Raised'],
       ['depressed', 'Depressed'],
@@ -96,13 +99,9 @@ const selectConfigs = {
     id: 'captions-font-family-%s',
     label: 'Font Family',
     options: [
-      ['proportionalSansSerif', 'Proportional Sans-Serif'],
-      ['monospaceSansSerif', 'Monospace Sans-Serif'],
-      ['proportionalSerif', 'Proportional Serif'],
-      ['monospaceSerif', 'Monospace Serif'],
-      ['casual', 'Casual'],
-      ['script', 'Script'],
-      ['small-caps', 'Small Caps']
+      // Customized
+      ['sansSerif', 'Sans-Serif'],
+      ['serif', 'Serif']
     ]
   },
 
