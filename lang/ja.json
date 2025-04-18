@@ -3,7 +3,7 @@
   "Video Player": "ビデオプレイヤー",
   "Play": "再生",
   "Pause": "一時停止",
-  "Replay": "もう一度見る",
+  "Replay": "リプレイ",
   "Current Time": "現在の時間",
   "Duration": "長さ",
   "Remaining Time": "残りの時間",
@@ -18,8 +18,8 @@
   "Fullscreen": "フルスクリーン",
   "Exit Fullscreen": "フルスクリーン以外",
   "Mute": "ミュート",
-  "Unmute": "サウンドをオン",
-  "Playback Rate": "再生レート",
+  "Unmute": "ミュート解除",
+  "Playback Rate": "再生速度",
   "Subtitles": "字幕",
   "subtitles off": "字幕 オフ",
   "Captions": "キャプション",
@@ -96,5 +96,6 @@
   "seconds": "秒",
   "Default": "標準",
   "Sans-Serif": "ゴシック体",
-  "Serif": "明朝体"
+  "Serif": "明朝体",
+  "Japanese": "日本語"
 }
