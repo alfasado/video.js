@@ -42,7 +42,7 @@ export function constructColor(color, opacity) {
   } else if (color.length === 7) {
     // color looks like "#f604e2"
     hex = color.slice(1);
-  } else {
+  } else if (color !== 'default') {
     throw new Error('Invalid color code provided, ' + color + '; must be formatted as e.g. #f0e or #f604e2.');
   }
   return 'rgba(' +
@@ -372,11 +372,12 @@ class TextTrackDisplay extends Component {
         cueDiv.firstChild.style.color = overrides.color;
       }
       if (overrides.textOpacity) {
+        // Customized(#fff remove)
         tryUpdateStyle(
           cueDiv.firstChild,
           'color',
           constructColor(
-            overrides.color || '#fff',
+            overrides.color || '',
             overrides.textOpacity
           )
         );
@@ -384,7 +385,23 @@ class TextTrackDisplay extends Component {
       if (overrides.backgroundColor) {
         cueDiv.firstChild.style.backgroundColor = overrides.backgroundColor;
       }
-      if (overrides.backgroundOpacity) {
+
+      if (overrides.backgroundColor === 'default') {
+        // Customize
+        if (cue.text.indexOf('vttBgWhite') > -1) {
+          tryUpdateStyle(
+            cueDiv.firstChild,
+            'backgroundColor',
+            constructColor('#fff', 0.5)
+          );
+        } else if (cue.text.indexOf('vttBgBlack') > -1) {
+          tryUpdateStyle(
+            cueDiv.firstChild,
+            'backgroundColor',
+            constructColor('#000', 0.5)
+          );
+        }
+      } else if (overrides.backgroundOpacity) {
         tryUpdateStyle(
           cueDiv.firstChild,
           'backgroundColor',
@@ -406,6 +423,8 @@ class TextTrackDisplay extends Component {
         }
       }
       if (overrides.edgeStyle) {
+        cueDiv.classList.remove('pcmsx-shadow');
+
         if (overrides.edgeStyle === 'dropshadow') {
           cueDiv.firstChild.style.textShadow = `2px 2px 3px ${darkGray}, 2px 2px 4px ${darkGray}, 2px 2px 5px ${darkGray}`;
         } else if (overrides.edgeStyle === 'raised') {
@@ -414,10 +433,10 @@ class TextTrackDisplay extends Component {
           cueDiv.firstChild.style.textShadow = `1px 1px ${lightGray}, 0 1px ${lightGray}, -1px -1px ${darkGray}, 0 -1px ${darkGray}`;
         } else if (overrides.edgeStyle === 'uniform') {
           cueDiv.firstChild.style.textShadow = `0 0 4px ${darkGray}, 0 0 4px ${darkGray}, 0 0 4px ${darkGray}, 0 0 4px ${darkGray}`;
+        } else if (overrides.edgeStyle === 'default') {
+          // Customized
+          cueDiv.classList.add('pcmsx-shadow');
         }
-      } else {
-        // Customized
-        cueDiv.firstChild.style.textShadow = 'initial';
       }
       if (overrides.fontPercent && overrides.fontPercent !== 1) {
         const fontSize = window.parseFloat(cueDiv.style.fontSize);
@@ -427,10 +446,16 @@ class TextTrackDisplay extends Component {
         cueDiv.style.top = 'auto';
       }
       if (overrides.fontFamily && overrides.fontFamily !== 'default') {
+        // Customized
         if (overrides.fontFamily === 'small-caps') {
           cueDiv.firstChild.style.fontVariant = 'small-caps';
+        } else if (
+          window.videoCaptionOptions &&
+          window.videoCaptionOptions.fontMap[overrides.fontFamily]
+        ) {
+          cueDiv.style.fontFamily = window.videoCaptionOptions.fontMap[overrides.fontFamily];
         } else {
-          cueDiv.firstChild.style.fontFamily = fontMap[overrides.fontFamily];
+          cueDiv.style.fontFamily = fontMap[overrides.fontFamily];
         }
       }
     }

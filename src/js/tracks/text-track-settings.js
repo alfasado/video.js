@@ -10,6 +10,9 @@ import log from '../utils/log';
 
 const LOCAL_STORAGE_KEY = 'vjs-text-track-settings';
 
+// Customized NONE, DEFAULT
+const COLOR_NONE = ['default', 'None'];
+const COLOR_DEFAULT = ['default', 'Default'];
 const COLOR_BLACK = ['#000', 'Black'];
 const COLOR_BLUE = ['#00F', 'Blue'];
 const COLOR_CYAN = ['#0FF', 'Cyan'];
@@ -40,6 +43,7 @@ const selectConfigs = {
     id: 'captions-background-color-%s',
     label: 'Color',
     options: [
+      COLOR_NONE,
       COLOR_BLACK,
       COLOR_WHITE,
       COLOR_RED,
@@ -68,6 +72,7 @@ const selectConfigs = {
     id: 'captions-foreground-color-%s',
     label: 'Color',
     options: [
+      COLOR_DEFAULT,
       COLOR_WHITE,
       COLOR_BLACK,
       COLOR_RED,

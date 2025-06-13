@@ -14,12 +14,13 @@ const tracks = [{
 }];
 
 const defaultSettings = {
-  backgroundColor: '#000',
-  backgroundOpacity: '1',
-  color: '#FFF',
-  fontFamily: 'proportionalSansSerif',
+  backgroundColor: 'default',
+  backgroundOpacity: '0',
+  color: 'default',
+  edgeStyle: 'default',
+  fontFamily: 'sansSerif',
   textOpacity: '1',
-  windowColor: '#000',
+  windowColor: 'default',
   windowOpacity: '0'
 };
 
@@ -48,7 +49,7 @@ QUnit.test('should update settings', function(assert) {
     textOpacity: '0.5',
     windowOpacity: '0.5',
     edgeStyle: 'raised',
-    fontFamily: 'monospaceSerif',
+    fontFamily: 'sansSerif',
     color: '#F00',
     backgroundColor: '#FFF',
     windowColor: '#FFF',
@@ -65,19 +66,19 @@ QUnit.test('should update settings', function(assert) {
 
   assert.equal(
     player.$('.vjs-text-color > select').selectedIndex,
-    2,
+    3,
     'text-color is set to new value'
   );
 
   assert.equal(
     player.$('.vjs-bg-color > select').selectedIndex,
-    1,
+    2,
     'bg-color is set to new value'
   );
 
   assert.equal(
     player.$('.vjs-window-color > select').selectedIndex,
-    1,
+    2,
     'window-color is set to new value'
   );
 
@@ -89,7 +90,7 @@ QUnit.test('should update settings', function(assert) {
 
   assert.equal(
     player.$('.vjs-bg-opacity > select').selectedIndex,
-    1,
+    2,
     'bg-opacity is set to new value'
   );
 
@@ -101,13 +102,13 @@ QUnit.test('should update settings', function(assert) {
 
   assert.equal(
     player.$('.vjs-edge-style select').selectedIndex,
-    1,
+    2,
     'edge-style is set to new value'
   );
 
   assert.equal(
     player.$('.vjs-font-family select').selectedIndex,
-    3,
+    0,
     'font-family is set to new value'
   );
 
@@ -327,7 +328,7 @@ QUnit.test('should restore saved settings', function(assert) {
     textOpacity: '0.5',
     windowOpacity: '0.5',
     edgeStyle: 'raised',
-    fontFamily: 'monospaceSerif',
+    fontFamily: 'sansSerif',
     color: '#F00',
     backgroundColor: '#FFF',
     windowColor: '#FFF',
