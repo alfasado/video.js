@@ -388,13 +388,13 @@ class TextTrackDisplay extends Component {
 
       if (overrides.backgroundColor === 'default') {
         // Customize
-        if (cue.text.indexOf('vttBgWhite') > -1) {
+        if (cue.text && cue.text.indexOf('vttBgWhite') > -1) {
           tryUpdateStyle(
             cueDiv.firstChild,
             'backgroundColor',
             constructColor('#fff', 0.5)
           );
-        } else if (cue.text.indexOf('vttBgBlack') > -1) {
+        } else if (cue.text && cue.text && cue.text.indexOf('vttBgBlack') > -1) {
           tryUpdateStyle(
             cueDiv.firstChild,
             'backgroundColor',
