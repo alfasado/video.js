@@ -8,4 +8,11 @@
  * Includes vtt.js <https://github.com/mozilla/vtt.js>
  * Available under Apache License Version 2.0
  * <https://github.com/mozilla/vtt.js/blob/main/LICENSE>
-<% } %> */
+<% } %> *
+ * ---
+ * Modified by Alfasado Inc <https://alfasado.net/>
+ * This file has been modified from the original Video.js / vtt.js source.
+ * Changes: 字幕テキストのruby要素対応、及び字幕テキストのスタイルを調整
+ * The modifications are licensed under Apache License Version 2.0, same as the original.
+ * ---
+ */
